@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志配置文件，优化了日志记录的安全性、性能效率、可维护性和可扩展性 -->
+<!-- OFF FATAL、ERROR、WARN、INFO、DEBUG和TRACE。其中OFF级别最高，TRACE级别最低。Log接口提供输出不同级别消息的方法：-->
+<!-- "status" 属性用于设置日志记录器的状态，可以是 "ON" 或 "OFF"，这里设置为 "OFF" 表示关闭状态 -->
+<!-- "monitorInterval" 属性用于设置监控日志文件变化的间隔时间，单位为秒，这里设置为 30 秒 -->
+<!-- 参数说明： https://www.cnblogs.com/fishlittle/p/17950944 -->
+<Configuration status="OFF" monitorInterval="30">
+    <Properties>
+        <Property name="appName">xiamu</Property>
+        <Property name="logDir">src/main/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %m%n"/>
+        </Console>
+
+        <!--INFO 级别的日志-->
+        <RollingFile name="INFO" fileName="${logDir}/INFO.log"
+                     filePattern="${logDir}/INFO_%d{yyyyMMdd}_%i.log">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS000}][%logger{50}][%level]- %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <!--WARN 级别的日志-->
+        <RollingFile name="WARN" fileName="${logDir}/WARN.log"
+                     filePattern="${logDir}/WARN_%d{yyyyMMdd}_%i.log">
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS000}][%logger{50}][%level]- %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <!--ERROR 级别的日志-->
+        <RollingFile name="ERROR" fileName="${logDir}/ERROR_.log"
+                     filePattern="${logDir}/ERROR_%d{yyyyMMdd}_%i.log">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS000}][%logger{50}][%level]- %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <!--DEBUG 级别的日志-->
+        <RollingFile name="DEBUG" fileName="${logDir}/DEBUG.log"
+                     filePattern="${logDir}/DEBUG_%d{yyyyMMdd}_%i.log">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS000}][%logger{50}][%level]- %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <Console name="MyBatisConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %m%n"/>
+        </Console>
+        <!-- 为MyBatis配置专用日志文件，增加了日志滚动策略 -->
+        <RollingFile name="MyBatisFileAppender" fileName="${logDir}/MyBatis.log"
+                     filePattern="${logDir}/MyBatis_%d{yyyyMMdd}_%i.log">
+            <PatternLayout>
+                <!--                <pattern>%d [%t] %-5level %logger{36} - %m%n</pattern>-->
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS000}][%logger{50}][%level]- %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- logger的name即代表了所记录的日志通常是包路径或者类的全限定名。在 log4j 的配置中，可以使用这个名称来控制日志的输出级别和输出目的地  -->
+        <!--        <Logger name="com.xiamu.spring" level="debug" additivity="false">-->
+        <!--            <appender-ref ref="INFO"/>-->
+        <!--        </Logger>-->
+
+        <!-- 为MyBatis配置独立的Logger，记录到MyBatisFile appender -->
+        <!-- 调整MyBatis日志级别为info，以减少日志量，提高性能 -->
+        <Logger name="com.xiamu.spring.mapper" level="DEBUG" additivity="false">
+            <appender-ref ref="MyBatisFileAppender"/>
+            <appender-ref ref="MyBatisConsole"/>
+        </Logger>
+
+        <!-- 控制log4j2自身的内部日志 -->
+        <Logger name="org.apache.logging.log4j" level="OFF" additivity="false"/>
+        <!-- 禁用内部日志 -->
+        <Logger name="org.apache.logging" level="off"/>
+        <Logger name="org.apache.logging.log4j.status.StatusLogger" level="OFF"/>
+
+        <!-- 默认日志配置，保持原有设置 -->
+        <Root level="DEBUG">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="INFO"/>
+            <appender-ref ref="ERROR"/>
+            <appender-ref ref="WARN"/>
+            <appender-ref ref="DEBUG"/>
+        </Root>
+    </Loggers>
+</Configuration>
