@@ -7,4 +7,8 @@ public interface UserInfoService extends IService<UserInfo> {
 
     UserInfo getUserInfoByUserName(String userName);
 
+    boolean deleteUserInfoByUserName(String userName);
+
+    int deleteUserByUserName(String userName);
+
 }

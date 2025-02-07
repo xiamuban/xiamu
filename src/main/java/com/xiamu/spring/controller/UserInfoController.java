@@ -25,4 +25,10 @@ public class UserInfoController {
             return "用户不存在！";
         }
     }
+
+    @GetMapping(value = "/deleteUser")
+    public String deleteUser(@RequestParam(value = "userName") String userName) {
+        int res = userInfoService.deleteUserByUserName(userName);
+        return String.valueOf(res);
+    }
 }

@@ -104,7 +104,7 @@
         <Logger name="org.apache.logging.log4j.status.StatusLogger" level="OFF"/>
 
         <!-- 默认日志配置，保持原有设置 -->
-        <Root level="DEBUG">
+        <Root level="INFO">
             <appender-ref ref="Console"/>
             <appender-ref ref="INFO"/>
             <appender-ref ref="ERROR"/>
