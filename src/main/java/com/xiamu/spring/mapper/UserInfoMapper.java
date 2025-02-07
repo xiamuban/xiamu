@@ -5,4 +5,8 @@ import com.xiamu.spring.dao.UserInfo;
 
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
+    int deleteByUserName(String userName);
+
+    void backUserInfo(String userName);
+
 }

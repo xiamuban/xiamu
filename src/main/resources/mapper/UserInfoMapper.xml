@@ -21,4 +21,22 @@
         userPhone,birthday,age,
         sex,nickName,email
     </sql>
+
+    <delete id="deleteByUserName" parameterType="string">
+        DELETE FROM user_info
+        <where>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
+
+    <insert id="backUserInfo" parameterType="string">
+        insert into user_info_back(uuid, user_name, describes, user_phone, birthday, age, sex, nick_name, email)  select * from user_info t
+        <where>
+            <if test="userName != null and userName != ''">
+                t.user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </insert>
 </mapper>
