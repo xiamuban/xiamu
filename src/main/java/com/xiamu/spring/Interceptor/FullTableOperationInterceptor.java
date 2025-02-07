@@ -9,6 +9,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+/**
+ * @Author xianghui.luo
+ * @Date 2025/2/7 14:07
+ * @Description mybatis sql更新拦截器
+ */
 @Intercepts({
         @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})
 })

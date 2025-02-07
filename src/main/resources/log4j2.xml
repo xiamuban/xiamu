@@ -92,7 +92,7 @@
 
         <!-- 为MyBatis配置独立的Logger，记录到MyBatisFile appender -->
         <!-- 调整MyBatis日志级别为info，以减少日志量，提高性能 -->
-        <Logger name="com.xiamu.spring.mapper" level="DEBUG" additivity="false">
+        <Logger name="com.xiamu.spring.mapper" level="OFF" additivity="false">
             <appender-ref ref="MyBatisFileAppender"/>
             <appender-ref ref="MyBatisConsole"/>
         </Logger>
