@@ -42,7 +42,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
      * maximumSize 设置缓存个数
      * expireAfterWrite 写入后过期时间
      * 请求过来时根据限制类型key创建一个RateLimiter，1s内有多个同样的请求时，进行访问限制拒绝处理
-     * 但是有随机性，不知道具体原因 比如同时有 10个请求过来，但是限制是1s 5个，那么可能只有其中5个请求会成功处理(但是是随机的，不是优先过来的请求就一定会成功处理，也不是一定只有5个请求会处理成功)
+     * acquire可以提前透支RateLimiter未来的令牌，使用acquire有风险
      */
     private static final LoadingCache<String, RateLimiter> SECONDS_TYPE_CACHE = CacheBuilder.newBuilder()
             .maximumSize(1000)
