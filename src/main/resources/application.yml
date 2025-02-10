@@ -1,0 +1,21 @@
+#sentinel dashboard cmd控制台启动
+# java '-Dserver.port=8090' '-Dcsp.sentinel.dashboard.server=localhost:8090' '-Dproject.name=sentinel-dashboard' '-jar' sentinel-dashboard-1.8.8.jar
+
+# VM 参数配置sentinel dashboard
+#-Dcsp.sentinel.dashboard.server=localhost:8090   Sentinel控制台的地址和端口号
+#-Dproject.name=xiamu	  本地应用在控制台中的名称
+
+
+spring:
+  application:
+    name: xiamu
+#  cloud:
+#    sentinel:
+#      transport:
+#        dashboard: localhost:8090 # sentinel控制台地址
+#      http-method-specify: true # 是否对请求方法进行区分
+
+#csp:
+#  sentinel:
+#    dashboard:
+#      server: localhost:8090 # sentinel控制台地址
