@@ -28,7 +28,7 @@ public class UserInfoController {
 
     @GetMapping(value = "/getUserInfo")
     //@AccessLimit(name = "getUserInfo", cacheType = SECONDS_TYPE, limit = 5, limitKeyType = LimitKeyTypeEnum.IPADDR, tipMsg = "访问过于频繁，请稍后再试！")
-    @SentinelResource("getUserInfo")
+    @SentinelResource(value = "getUserInfo", blockHandler = "blockHandlerDefault", blockHandlerClass = BlockHandler.class)
     public String getUserInfo(@RequestParam(value = "userName") String userName) {
         UserInfo userInfo = userInfoService.getUserInfoByUserName(userName);
         if (Optional.ofNullable(userInfo).isPresent()) {
