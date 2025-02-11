@@ -5,17 +5,14 @@
 #-Dcsp.sentinel.dashboard.server=localhost:8090   Sentinel控制台的地址和端口号
 #-Dproject.name=xiamu	  本地应用在控制台中的名称
 
-
+#需要依赖spring-cloud-starter-alibaba-sentinel
 spring:
   application:
     name: xiamu
-#  cloud:
-#    sentinel:
-#      transport:
-#        dashboard: localhost:8090 # sentinel控制台地址
-#      http-method-specify: true # 是否对请求方法进行区分
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8090
+      http-method-specify: true # 是否对请求方法进行区分
 
-#csp:
-#  sentinel:
-#    dashboard:
-#      server: localhost:8090 # sentinel控制台地址
